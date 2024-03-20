@@ -113,7 +113,7 @@ The first step is to “design” / “sketch” / “prototype” each element:
 - Replace the file storage by a Database storage
 - Map your models to a table in database by using `sqlalchemy` O.R.M.
 
-**We've now implementing the database for our clone! We've already Designed a static page on the front-end, and engineered a way to carry out some manipulations on our data using the back-end console.**
+**We're now implementing a database for our clone! We've already Designed a static page on the front-end, and engineered a way to carry out some manipulations on our data using the back-end console.**
 
 <p align="center">
     <img src="./misc_stuff/db.png" alt="project progress">
