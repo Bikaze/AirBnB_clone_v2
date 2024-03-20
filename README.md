@@ -79,6 +79,8 @@ EOF  help  quit
 $
 ```
 
+---
+
 ## <a href="https://github.com/Bikaze/AirBnB_clone/tree/main/web_static">Web static</a>
 
 After the command interpreter for managing your AirBnB objects, it’s time to make them alive!
@@ -97,4 +99,25 @@ The first step is to “design” / “sketch” / “prototype” each element:
 
 <p align="center">
     <img src="./misc_stuff/hbnb_step1.png" alt="front-end html">
+</p>
+
+---
+
+## MySQL storage
+
+**Next we're going to:**
+
+- Replace the file storage by a Database storage
+- Map your models to a table in database by using `sqlalchemy` O.R.M.
+
+**We've now implementing the database for our clone! We've already Designed a static page on the front-end, and engineered a way to carry out some manipulations on our data using the back-end console.**
+
+<p align="center">
+    <img src="./misc_stuff/db.png" alt="project progress">
+</p>
+
+**This is the Schema of our database tables:**
+
+<p align="center">
+    <img src="./misc_stuff/schema" alt="database schema">
 </p>
