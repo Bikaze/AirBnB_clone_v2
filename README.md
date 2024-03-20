@@ -15,6 +15,9 @@ Hbnb(this project) is a fully fledged Web application, with a database storage, 
 **Currently the implemented features are:**
 - The back-end console(Command Interpreter)
 - The Static web page of our website
+- Database Logic
+
+---
 
 ## Command Interpreter(Backend-console) :man_technologist:
 
@@ -119,5 +122,5 @@ The first step is to “design” / “sketch” / “prototype” each element:
 **This is the Schema of our database tables:**
 
 <p align="center">
-    <img src="./misc_stuff/schema" alt="database schema">
+    <img src="./misc_stuff/schema.jpg" alt="database schema">
 </p>
