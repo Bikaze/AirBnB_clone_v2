@@ -16,3 +16,17 @@ class Place(BaseModel):
     latitude = 0.0
     longitude = 0.0
     amenity_ids = []
+    reviews = relationship("Review", backref="user", cascade="all, delete")
+
+    def reviews(self):
+        """
+        An attribute eturns the list of Review instances
+        with place_id equals to the current Place.id
+        """
+        from models import storage
+        mylist[]
+        returned_reviews = storage.all('Review').values()
+        for rev in returned_reviews:
+            if self.id == reviews.place_id:
+                mylist.append(rev)
+        return mylist
