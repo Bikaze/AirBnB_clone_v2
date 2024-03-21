@@ -131,15 +131,20 @@ class HBNBCommand(cmd.Cmd):
             dct = {}
             for obj in new_args:
                 obj = obj.split('=')
-                if obj[1][0] == '"' or obj[1][0] == "'":
-                    dct[obj[0]] = obj[1].strip('\'"') \
+                val = "''"
+                if obj[1]:
+                    val = obj[1]
+                if val[0] == '"' or val[0] == "'":
+                    dct[obj[0]] = val.strip('\'"') \
                                         .replace('_', " ").replace('"', '\"')
-                if obj[1].isnumeric() or obj[1].replace('.', '', 1) \
-                                               .isnumeric():
-                    if obj[1].isnumeric():
-                        obj[1] = int(obj[1])
+                elif val.isnumeric() or val.replace('.', '', 1) \
+                        .isnumeric() or val.replace('-', '', 1).isnumeric() or\
+                        val.replace('.', '', 1).replace('-', '', 1)\
+                        .isnumeric():
+                    if val.isnumeric():
+                        val = int(obj[1])
                     else:
-                        obj[1] = float(obj[1])
+                        val = float(obj[1])
                     dct[obj[0]] = obj[1]
             arg = f'{clss} {new_instance.id} {dct}'
             self.do_update(arg)
