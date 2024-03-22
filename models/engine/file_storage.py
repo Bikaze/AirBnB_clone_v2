@@ -13,9 +13,9 @@ class FileStorage:
         if cls is None:
             return FileStorage.__objects
         my_dict = {}
-        for key, val in FileStorage.__objects.item():
+        for key, val in FileStorage.__objects.items():
             if isinstance(val, cls):
-                my_dect[key] = val
+                my_dict[key] = val
         return my_dict
 
     def new(self, obj):
@@ -61,7 +61,12 @@ class FileStorage:
         from __objects if it is inside
         """
         if obj is not None:
-            if obj in self.__objects:
-                del self.__objects[obj]
+            if obj in FileStorage.__objects.values():
+                key = ""
+                for k in FileStorage.__objects.keys():
+                    if FileStorage.__objects[k] == obj:
+                        key = k
+                del FileStorage.__objects[key]
+                self.save()
         else:
             pass
