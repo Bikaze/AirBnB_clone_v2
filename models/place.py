@@ -20,8 +20,20 @@ class Place(BaseModel, Base):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
-        reviews = relationship("Review", backref="place",
-                               cascade="all, delete")
+
+        def reviews(self):
+            """
+            An attribute eturns the list of Review instances
+            with place_id equals to the current Place.id
+            """
+            from models import storage
+            mylist = []
+            returned_reviews = storage.all('Review').values()
+            for rev in returned_reviews:
+                if self.id == rev.place_id:
+                    mylist.append(rev)
+            return mylist
+
     else:
         __tablename__ = "places"
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
@@ -34,16 +46,5 @@ class Place(BaseModel, Base):
         price_by_night = Column(Integer(), default=0)
         latitude = Column(Float, default=0.0)
         longitude = Column(Float, default=0.0)
-
-    def reviews(self):
-        """
-        An attribute eturns the list of Review instances
-        with place_id equals to the current Place.id
-        """
-        from models import storage
-        mylist = []
-        returned_reviews = storage.all('Review').values()
-        for rev in returned_reviews:
-            if self.id == rev.place_id:
-                mylist.append(rev)
-        return mylist
+        reviews = relationship("Review", backref="place",
+                               cascade="all, delete")
