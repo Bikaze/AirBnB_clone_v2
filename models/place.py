@@ -20,7 +20,8 @@ class Place(BaseModel, Base):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
-# reviews = relationship("Review", backref="user", cascade="all, delete")
+        reviews = relationship("Review", backref="place",
+                               cascade="all, delete")
     else:
         __tablename__ = "places"
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
@@ -43,6 +44,6 @@ class Place(BaseModel, Base):
         mylist = []
         returned_reviews = storage.all('Review').values()
         for rev in returned_reviews:
-            if self.id == reviews.place_id:
+            if self.id == rev.place_id:
                 mylist.append(rev)
         return mylist
