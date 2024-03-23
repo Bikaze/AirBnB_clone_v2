@@ -2,6 +2,7 @@
 """ Console Module """
 import cmd
 import sys
+import models
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -125,7 +126,6 @@ class HBNBCommand(cmd.Cmd):
         new_instance = HBNBCommand.classes[new_args[0]]()
         clss = new_args[0]
         print(new_instance.id)
-        storage.save()
         if new_args[2]:
             new_args = new_args[2].split(' ')
             dct = {}
@@ -145,9 +145,14 @@ class HBNBCommand(cmd.Cmd):
                         val = int(obj[1])
                     else:
                         val = float(obj[1])
-                    dct[obj[0]] = obj[1]
-            arg = f'{clss} {new_instance.id} {dct}'
-            self.do_update(arg)
+                    dct[obj[0]] = val
+#arg = f'{clss} {new_instance.id} {dct}'
+#           if models.storage_t == 'db':
+            new_instance.__dict__.update(dct)
+            new_instance.save()
+#self.do_update(arg)
+#     else:
+#           storage.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -229,11 +234,11 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
-                if k.split('.')[0] == args:
-                    print_list.append(str(v))
+            args = HBNBCommand.classes[args]
+            for k, v in storage.all(args).items():
+                print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 print_list.append(str(v))
 
         print(print_list)
@@ -280,7 +285,6 @@ class HBNBCommand(cmd.Cmd):
 
         # generate key from class and id
         key = c_name + "." + c_id
-
         # determine if key is present
         if key not in storage.all():
             print("** no instance found **")
