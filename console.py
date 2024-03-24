@@ -146,11 +146,11 @@ class HBNBCommand(cmd.Cmd):
                     else:
                         val = float(obj[1])
                     dct[obj[0]] = val
-#arg = f'{clss} {new_instance.id} {dct}'
-#           if models.storage_t == 'db':
-            new_instance.__dict__.update(dct)
-            new_instance.save()
-#self.do_update(arg)
+# arg = f'{clss} {new_instance.id} {dct}'
+# if models.storage_t == 'db':
+                    new_instance.__dict__.update(dct)
+        new_instance.save()
+# self.do_update(arg)
 #     else:
 #           storage.save()
 
