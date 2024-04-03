@@ -2,10 +2,10 @@
 # This script sets up your web servers for the deployment of web_static
 
 # Install Nginx if not already installed
-#if ! command -v nginx &> /dev/null; then
-sudo apt-get -y update
-sudo apt-get -y install nginx
-#fi
+if ! command -v nginx &> /dev/null; then
+    sudo apt-get -y update
+    sudo apt-get -y install nginx
+fi
 
 # Create necessary directories if they don't exist
 sudo mkdir -p /data/web_static/releases/test /data/web_static/shared
@@ -28,9 +28,7 @@ sudo ln -sf /data/web_static/releases/test /data/web_static/current
 sudo chown -R ubuntu:ubuntu /data/
 
 # Update Nginx configuration
-#sudo sed -i '/hbnb_static/ { s/^#//; }' /etc/nginx/sites-available/default
-#sudo sed -i "s|root /var/www/html;|root /data/web_static/current/;|" /etc/nginx/sites-available/default
-sudo sed -i "s|location / {|\n\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n\n\tlocation / {|" /etc/nginx/sites-available/default
+sudo sed -i "s|location / {|\n\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}\n\n\tlocation / {|" /etc/nginx/sites-available/default
 
 # Restart Nginx
 sudo service nginx restart
