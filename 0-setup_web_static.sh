@@ -28,8 +28,8 @@ sudo ln -sf /data/web_static/releases/test /data/web_static/current
 sudo chown -R ubuntu:ubuntu /data/
 
 # Update Nginx configuration
-sudo sed -i '/hbnb_static/ { s/^#//; }' /etc/nginx/sites-available/default
-sudo sed -i "s|root /var/www/html;|root /data/web_static/current/;|" /etc/nginx/sites-available/default
+#sudo sed -i '/hbnb_static/ { s/^#//; }' /etc/nginx/sites-available/default
+#sudo sed -i "s|root /var/www/html;|root /data/web_static/current/;|" /etc/nginx/sites-available/default
 sudo sed -i "s|location / {|\n\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n\n\tlocation / {|" /etc/nginx/sites-available/default
 
 # Restart Nginx
