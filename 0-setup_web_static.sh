@@ -22,6 +22,7 @@ sudo bash -c 'cat > /data/web_static/releases/test/index.html << EOF
 EOF'
 
 # Create symbolic link
+sudo unlink /data/web_static/current
 sudo ln -sf /data/web_static/releases/test /data/web_static/current
 
 # Set ownership to ubuntu user and group recursively
