@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
 import models
-from models import storage
 from models.base_model import BaseModel, Base
 from models.city import City
 from sqlalchemy import String, Column
@@ -19,7 +18,7 @@ class State(BaseModel, Base):
         def cities(self):
             """Returns the list of City instances with state_id equals
                to the State.id"""
-            dic_val = storage.all(City).values()
+            dic_val = models.storage.all(City).values()
             cty_list = []
             for city in dic_val:
                 if city.state_id == self.id:
