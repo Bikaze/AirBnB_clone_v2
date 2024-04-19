@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """This file contains the definition of the DBStorage class"""
 
 from models.base_model import BaseModel, Base
