@@ -70,3 +70,9 @@ class FileStorage:
                 self.save()
         else:
             pass
+
+    def close(self):
+        """
+        This method calls the self.reload() funtion
+        """
+        self.reload()
