@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This is a script that starts a Flask web application: listening on
-0.0.0.0, port 5000, and implements Routes: /, /hbnb, and /c/<text>"""
+0.0.0.0, port 5000, and implements Routes: /, /hbnb, /c/<text>, /python/,
+ and /python/<text>"""
 
 from flask import Flask
 
