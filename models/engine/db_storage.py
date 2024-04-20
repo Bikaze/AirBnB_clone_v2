@@ -37,8 +37,8 @@ class DBStorage:
         the class name (only if not 'None')"""
         obj_list = []
         obj_dic = {}
+        cls = DBStorage.classes.get(cls)
         if cls:
-            cls = DBStorage.classes[cls]
             obj_list = self.__session.query(cls).all()
         else:
             for clss in DBStorage.classes.values():

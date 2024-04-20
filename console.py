@@ -183,7 +183,7 @@ class HBNBCommand(cmd.Cmd):
 
         key = c_name + "." + c_id
         try:
-            print(storage.all(HBNBCommand.classes[c_name])[key])
+            print(storage.all(c_name)[key])
         except KeyError:
             print("** no instance found **")
 
@@ -234,7 +234,7 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            args = HBNBCommand.classes[args]
+# args = HBNBCommand.classes[args]
             for k, v in storage.all(args).items():
                 print_list.append(str(v))
         else:
