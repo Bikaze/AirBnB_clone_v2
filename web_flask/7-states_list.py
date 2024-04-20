@@ -16,7 +16,7 @@ def states():
 
 
 @app.teardown_appcontext
-def teardown(exc):
+def teardown(e):
     """This function removes the current Storage(db or file) Session"""
     storage.close()
 
