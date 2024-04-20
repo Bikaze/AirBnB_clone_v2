@@ -44,8 +44,8 @@ class DBStorage:
             for clss in DBStorage.classes.values():
                 obj_list.extend(self.__session.query(clss).all())
         for obj in obj_list:
-            if '_sa_instance_state' in obj.__dict__.keys():
-                del obj.__dict__['_sa_instance_state']
+#if '_sa_instance_state' in obj.__dict__.keys():
+#del obj.__dict__['_sa_instance_state']
             obj_dic.update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
         return obj_dic
 
