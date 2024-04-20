@@ -38,6 +38,7 @@ class DBStorage:
         obj_list = []
         obj_dic = {}
         if cls:
+            cls = DBStorage.classes[cls]
             obj_list = self.__session.query(cls).all()
         else:
             for clss in DBStorage.classes.values():
