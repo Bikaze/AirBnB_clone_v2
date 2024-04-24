@@ -3,17 +3,17 @@
 import models
 from models.base_model import BaseModel, Base
 from sqlalchemy.orm import relationship
-from sqlalchemy import Table, Column, String, Integer, Float, ForeignKey
+from sqlalchemy import PrimaryKeyConstraint, Column, String, Integer, Float, ForeignKey
 
 if models.storage_t == 'db':
-    place_amenity = Table('place_amenity', Base.metadata,
+    """place_amenity = Table('place_amenity', Base.metadata,
                           Column('place_id', String(60),
                                  ForeignKey('places.id'),
                                  primary_key=True, nullable=False),
                           Column('amenity_id', String(60),
                                  ForeignKey('amenities.id'),
                                  primary_key=True, nullable=False)
-                          )
+                          )"""
 
 
 class Place(BaseModel, Base):
@@ -46,7 +46,7 @@ class Place(BaseModel, Base):
 
     else:
         __tablename__ = "places"
-        city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
+#        city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
         name = Column(String(128), nullable=False)
         description = Column(String(1024))

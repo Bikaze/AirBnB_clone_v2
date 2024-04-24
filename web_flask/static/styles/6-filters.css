@@ -57,7 +57,7 @@ h4 {
     box-sizing: border-box;
     padding: 5% 20%;
     max-height: 300px;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .popover h2 {

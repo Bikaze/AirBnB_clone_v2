@@ -3,11 +3,11 @@
 import json
 from models.base_model import BaseModel
 from models.user import User
-from models.place import Place
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+from models.place import Place
 
 classes = {
     'BaseModel': BaseModel, 'User': User, 'Place': Place,
@@ -29,7 +29,8 @@ class FileStorage:
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
-        cls = FileStorage.classes.get(cls)
+        if type(cls) is str:
+            cls = FileStorage.classes.get(cls)
         if cls is None:
             return FileStorage.__objects
         my_dict = {}
@@ -58,7 +59,8 @@ class FileStorage:
             with open(FileStorage.__file_path, 'r') as f:
                 temp = json.load(f)
                 for key, val in temp.items():
-                    self.all()[key] = FileStorage.classes[val['__class__']](**val)
+                    class_obj = FileStorage.classes[val['__class__']]
+                    self.all()[key] = class_obj(**val)
         except FileNotFoundError:
             pass
 

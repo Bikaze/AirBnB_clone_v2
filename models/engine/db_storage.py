@@ -3,13 +3,13 @@
 
 from models.base_model import BaseModel, Base
 from models.user import User
-from models.place import Place
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 from models.state import State
-from sqlalchemy import create_engine
+from models.place import Place
 from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy import create_engine
 from os import getenv
 
 
