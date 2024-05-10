@@ -1,57 +1,74 @@
 #!/usr/bin/python3
-"""
-    Fabric script that creates and distributes an archive
-    on my web servers, using deploy function
-"""
-from fabric.api import *
-from fabric.operations import run, put, sudo, local
-from datetime import datetime
-import os
+# Fabfile to generates a .tgz archive from the contents of web_static.
+# and  distribute an archive to web servers.
 
-env.hosts = ['66.70.184.249', '54.210.138.75']
+import os.path
+from fabric.api import env
+from fabric.api import put
+from fabric.api import run
+from fabric.api import local
+from datetime import datetime
+
+env.hosts = ["54.157.131.50", "54.237.92.79"]
 created_path = None
 
 
 def do_pack():
-    """
-        generates a .tgz archine from contents of web_static
-    """
-    time = datetime.utcnow().strftime('%Y%m%d%H%M%S')
-    file_name = "versions/web_static_{}.tgz".format(time)
-    try:
-        local("mkdir -p ./versions")
-        local("tar --create --verbose -z --file={} ./web_static"
-              .format(file_name))
-        return file_name
-    except:
+    """Create a tar gzipped archive of the directory web_static."""
+    dt = datetime.utcnow()
+    file = "versions/web_static_{}{}{}{}{}{}.tgz".format(dt.year,
+                                                         dt.month,
+                                                         dt.day,
+                                                         dt.hour,
+                                                         dt.minute,
+                                                         dt.second)
+    if os.path.isdir("versions") is False:
+        if local("mkdir -p versions").failed is True:
+            return None
+    if local("tar -cvzf {} web_static".format(file)).failed is True:
         return None
+    return file
 
 
 def do_deploy(archive_path):
-    """
-        using fabric to distribute archive
+    """Distributes an archive to a web server.
+
+    Args:
+        archive_path (str): The path of the archive to distribute.
+    Returns:
+        If the file doesn't exist at archive_path or an error occurs - False.
+        Otherwise - True.
     """
     if os.path.isfile(archive_path) is False:
         return False
-    try:
-        archive = archive_path.split("/")[-1]
-        path = "/data/web_static/releases"
-        put("{}".format(archive_path), "/tmp/{}".format(archive))
-        folder = archive.split(".")
-        run("mkdir -p {}/{}/".format(path, folder[0]))
-        new_archive = '.'.join(folder)
-        run("tar -xzf /tmp/{} -C {}/{}/"
-            .format(new_archive, path, folder[0]))
-        run("rm /tmp/{}".format(archive))
-        run("mv {}/{}/web_static/* {}/{}/"
-            .format(path, folder[0], path, folder[0]))
-        run("rm -rf {}/{}/web_static".format(path, folder[0]))
-        run("rm -rf /data/web_static/current")
-        run("ln -sf {}/{} /data/web_static/current"
-            .format(path, folder[0]))
-        return True
-    except:
+    file = archive_path.split("/")[-1]
+    name = file.split(".")[0]
+
+    if put(archive_path, "/tmp/{}".format(file)).failed is True:
         return False
+    if run("rm -rf /data/web_static/releases/{}/".
+           format(name)).failed is True:
+        return False
+    if run("mkdir -p /data/web_static/releases/{}/".
+           format(name)).failed is True:
+        return False
+    if run("tar -xzf /tmp/{} -C /data/web_static/releases/{}/".
+           format(file, name)).failed is True:
+        return False
+    if run("rm /tmp/{}".format(file)).failed is True:
+        return False
+    if run("mv /data/web_static/releases/{}/web_static/* "
+           "/data/web_static/releases/{}/".format(name, name)).failed is True:
+        return False
+    if run("rm -rf /data/web_static/releases/{}/web_static".
+           format(name)).failed is True:
+        return False
+    if run("rm -rf /data/web_static/current").failed is True:
+        return False
+    if run("ln -s /data/web_static/releases/{}/ /data/web_static/current".
+           format(name)).failed is True:
+        return False
+    return True
 
 
 def deploy():
